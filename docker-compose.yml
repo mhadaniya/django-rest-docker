@@ -1,0 +1,26 @@
+version: '3.6'
+
+services:
+  web:
+    build: 
+      context: .
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./app:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=django-rest
+      - DB_USER=postgres
+      - DB_PASS=q1w2e3r4
+    depends_on:
+        - db
+
+  db:
+    image: postgres:10.12-alpine    
+    environment:
+      - POSTGRES_DB=django-rest
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=q1w2e3r4      
